@@ -1,0 +1,53 @@
+package controlador;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.Bean;
+
+import util.MySqlDBConexion;
+
+public class Action {
+	
+	public List<Bean>consultar(int desde, int hasta){
+		List<Bean>lista= new ArrayList<Bean>();
+		Connection conn= null;
+		PreparedStatement pstm = null;
+		ResultSet rs= null;
+		try{
+			String sql= "select s.idsentencias,s.numeroexpediente,p.nombre, s.aniosCondena,"
+					+ " s.juzgado"
+					+ " from sentencias s"
+					+ " INNER JOIN persona p on s.idpersona= p.idpersona "
+					+ " where s.aniosCondena BETWEEN ? AND ?";
+			conn= MySqlDBConexion.getConexion();
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, desde);
+			pstm.setInt (2, hasta);
+			rs=pstm.executeQuery();
+			
+			while(rs.next()){
+				SentenciaBean bena= new SentenciaBean( rs.getInt("idsentencias"), rs.getString("numeroexpediente"), rs.getString("nombre"), rs.getInt("aniosCondena"), rs.getString("juzgado"));
+				lista.add(bena);
+			}
+			
+		}catch (Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(rs!= null){	rs.close();		}
+				if(pstm!= null){rs.close();}
+				if(conn!=null){conn.close();}
+				
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return lista;
+	}
+
+}

@@ -1,0 +1,2 @@
+seleccionar del JComboBox el nombre de un cliente, luego hacer clic en el botón Empezar
+y mostrar en JLabel lblTiempo el tiempo y se debe disminuir por cada segundo.

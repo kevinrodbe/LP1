@@ -1,0 +1,33 @@
+package hilos;
+
+import javax.swing.JLabel;
+
+public class Temporizador implements Runnable {
+
+
+		// TODO Auto-generated method stub
+		private int timepo ;
+		private JLabel etiqueta;
+		public Temporizador(int timepo, JLabel etiqueta) {
+			this.timepo = timepo;
+			this.etiqueta = etiqueta;
+		}
+		@Override
+		public void run() {
+			try{
+				int c=1;
+				while(true){
+					etiqueta.setText( "Tiempo : "+c);
+					c++;
+					Thread.sleep(1000);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+		}
+		
+	
+	
+
+}

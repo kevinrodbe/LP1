@@ -1,0 +1,12 @@
+Consulta de Eventos  por Local 
+(segun la capacidad)
+
+Ordenar (asc/desc) por nombre, local, capacidad.
+
+Usar MVC, JDBC, Collections (Comparator)
+
+1. Crear el bean (Modelo)
+2. Crear el action (Controlador)
+3. Crear la gui (Vista)
+4. Crear las clases para ordenar (Comparator)
+5. Implementar en la GUI

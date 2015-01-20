@@ -1,0 +1,30 @@
+package util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class MySqlDBConexion {
+	// Cargar la libreria
+	static {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Metodo para obtener la conexion
+	public static Connection getConexion() {
+		Connection conn = null;
+		try {
+			// Se obtiene la conexion con la ruta del servicio + bd
+			// usuario
+			// clave
+			conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost/modelo", "root", "mysql");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+}

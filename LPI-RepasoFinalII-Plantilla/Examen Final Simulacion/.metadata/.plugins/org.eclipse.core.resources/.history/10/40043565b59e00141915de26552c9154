@@ -1,0 +1,244 @@
+package vista;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+
+import java.awt.Font;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+
+import java.awt.Component;
+
+import javax.swing.Box;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.border.LineBorder;
+
+import java.awt.Color;
+
+import javax.swing.JSeparator;
+import javax.swing.JScrollPane;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
+
+import source.JusgadoSort;
+import source.PersonaSort;
+import controlador.Action;
+import modelo.SentenciaBean;
+
+public class Principal extends JFrame implements ActionListener {
+
+	private JPanel contentPane;
+	private JTextField txtDesde;
+	private JTextField txtHasta;
+	private JTable table;
+	private JButton btnConsultar;
+
+	private JRadioButton rdbtnNombre;
+	private JRadioButton rdbtnJuzgado;
+	private JCheckBox chckbxAscendente;
+
+	/* atributos agregados */
+	// Para agrupar los controls JRadioButton:
+	private ButtonGroup group;
+	private JLabel lblDesde;
+	private JLabel lblTiempo;
+	List<SentenciaBean>lista= new ArrayList<SentenciaBean>();
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Principal frame = new Principal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Principal() {
+		setTitle("Consulta de Sentencias");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 618, 329);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JLabel lblTitulo = new JLabel("Consulta de Sentencias");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 24));
+		lblTitulo.setBounds(149, 0, 308, 32);
+		contentPane.add(lblTitulo);
+
+		JLabel lblFiltro = new JLabel("A\u00F1os de condena");
+		lblFiltro.setBounds(10, 43, 101, 23);
+		contentPane.add(lblFiltro);
+
+		txtDesde = new JTextField();
+		txtDesde.setBounds(197, 44, 73, 20);
+		contentPane.add(txtDesde);
+		txtDesde.setColumns(10);
+
+		JLabel lblHasta = new JLabel("hasta");
+		lblHasta.setBounds(278, 43, 38, 23);
+		contentPane.add(lblHasta);
+
+		txtHasta = new JTextField();
+		txtHasta.setColumns(10);
+		txtHasta.setBounds(322, 44, 73, 20);
+		contentPane.add(txtHasta);
+
+		btnConsultar = new JButton("Consultar");
+		btnConsultar.addActionListener(this);
+		btnConsultar.setBounds(503, 43, 89, 23);
+		contentPane.add(btnConsultar);
+
+		JLabel lblOrdenarPor = new JLabel("Ordenar por:");
+		lblOrdenarPor.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 18));
+		lblOrdenarPor.setBounds(10, 104, 129, 23);
+		contentPane.add(lblOrdenarPor);
+
+		// Se instancia un nuevo Button group
+		group = new ButtonGroup();
+
+		rdbtnNombre = new JRadioButton("Nombre");
+		rdbtnNombre.setSelected(true);
+		rdbtnNombre.addActionListener(this);
+		rdbtnNombre.setBounds(10, 134, 80, 23);
+		contentPane.add(rdbtnNombre);
+		// se agrega el control radio al grupo
+		group.add(rdbtnNombre);
+
+		rdbtnJuzgado = new JRadioButton("Juzgado");
+		rdbtnJuzgado.addActionListener(this);
+		rdbtnJuzgado.setBounds(157, 134, 95, 23);
+		contentPane.add(rdbtnJuzgado);
+		// se agrega el control radio al grupo
+		group.add(rdbtnJuzgado);
+
+		chckbxAscendente = new JCheckBox("Ascendente");
+		chckbxAscendente.addActionListener(this);
+		chckbxAscendente.setSelected(true);
+		chckbxAscendente.setBounds(491, 134, 101, 23);
+		contentPane.add(chckbxAscendente);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 104, 582, 15);
+		contentPane.add(separator);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 161, 582, 115);
+		contentPane.add(scrollPane);
+
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setFillsViewportHeight(true);
+		table.setAutoCreateRowSorter(true);
+		table.setCellSelectionEnabled(true);
+		table.setColumnSelectionAllowed(true);
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
+				"ID", "Expediente", "Persona", "Condena", "Juzgado" }) {
+			Class[] columnTypes = new Class[] { Integer.class, String.class,
+					String.class, Integer.class, String.class };
+
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		{
+			lblDesde = new JLabel("desde");
+			lblDesde.setBounds(149, 43, 38, 23);
+			contentPane.add(lblDesde);
+		}
+
+		lblTiempo = new JLabel("");
+		lblTiempo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblTiempo.setForeground(Color.BLUE);
+		lblTiempo.setBounds(10, 70, 396, 32);
+		contentPane.add(lblTiempo);
+
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnConsultar) {
+			btn_Click(e);
+		}
+		if (e.getSource() == rdbtnNombre || e.getSource() == rdbtnJuzgado
+				|| e.getSource() == chckbxAscendente) {
+			
+		//se invoca al metodo ordenar
+			Ordenar();
+			ListarEnGrilla();
+		}
+		
+	}
+
+	
+
+	private void Ordenar() {
+if(rdbtnNombre.isSelected()){
+	Collections.sort(lista, new PersonaSort());
+}
+if(rdbtnJuzgado.isSelected()){
+	Collections.sort(lista, new JusgadoSort());
+}
+		
+	if(!chckbxAscendente.isSelected()){
+		Collections.reverse(lista);
+	}
+
+
+	}
+
+	protected void btn_Click(ActionEvent e) {
+		
+			lista= new Action().consultar(Integer.parseInt(txtDesde.getText()), Integer.parseInt(txtHasta.getText()));
+			
+		// Se muestran los resultados en el control JTable
+		ListarEnGrilla();
+	}
+
+	private void ListarEnGrilla() {
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.getDataVector().clear();
+		for(SentenciaBean bean: lista){
+			Object row[]= {bean.getIdsentencia(),
+					bean.getNumeroExpediente(),
+					bean.getNombre(),
+					bean.getAños(),
+					bean.getJuzgado()};
+			
+			model .addRow(row);
+			
+		}
+
+	}
+}

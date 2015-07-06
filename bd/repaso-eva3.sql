@@ -1,3 +1,4 @@
+--# procedimiento con parametros de entrada
 create procedure usp_actualizar_categorias
 @nom varchar(15),
 @des text,
@@ -30,7 +31,6 @@ declare @can int
 exec usp_total_productos @c = @can output
 print 'total productos' +str(@can)
 go
-
 
 --# procedemos variables para el cursor
 create procedure usp_listar_cursor_categorias
@@ -78,3 +78,18 @@ deallocate cBuscarClientes
 end
 --ejecutar
 exec usp_Buscar_Cursor_Clientes 'ANTON'
+
+/* función de tabla -- no see */
+create function fListarPreg3() Returns Table
+as
+Return(
+select YEAR(f.fecha_emision) as fecha, c.razon_social, f.idfactura, sum(d.precio*d.cantidad) as total
+from tb_factura f join tb_cliente c
+on f.idcliente = c.idcliente
+join tb_detfactura d
+on d.idfactura = f.idfactura
+group by f.idfactura,c.razon_social,fecha_emision
+)
+go
+--ejecutar
+select * from dbo.fListarPreg3()

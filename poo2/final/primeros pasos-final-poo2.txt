@@ -1,0 +1,22 @@
+1.- Nuevo proyecto -> otros tipos/soluciones
+2.- Clic derecho en el proy -> agregar nuevo proy/biblioteca de clases::
+	a.- Acceso de datos
+	b.- Capa negocio
+	Eliminar las clases generadas.vb
+3.- Clic derecho en el proy -> agregar nuevo proy/windows form:
+	a.- Capa presentacion
+4.- Clic derecho en capa Acceso de datos-> agregar/referencia
+	a.- System.Configuration
+5.- Clic derecho en Capa negocio-> agregar/referencia	
+	a.- Tab Solucion/proyectos-> Capa de datos
+6.- Clic derecho en Capa presentacion-> agregar/referencia	
+	a.- Tab Solucion/proyectos-> Capa de negocio
+7.- Clic derecho en Capa acceso de datos-> agregar/clase->ClienteDAO
+8.- Clic derecho en Capa acceso de datos-> agregar/clase->ClienteNegocio
+::Podemos agregar otro form::
+9.- clic derecho en Capa presentacion -> agregar/nuevo elemento/windows form
+	a.- otroform.vb
+10.- Clic derecho en Capa negocio -> establecer como proy de inicio
+:: para ejecutar un frm::
+Menu proyecto/propiedades de Capa presentacion:
+	a.- Elegimos el form de inicio

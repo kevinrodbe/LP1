@@ -20,3 +20,12 @@
 :: para ejecutar un frm::
 Menu proyecto/propiedades de Capa presentacion:
 	a.- Elegimos el form de inicio
+==============================================================
+reportes agrupados
+1.- Seleccionamos el frm
+2.- Menú proyecto/agregar nuevo elemento/Reporting->Crytal reports
+	a.- Usar asistente de informes. Estándar.
+	b.- Localhost -> Next
+	c.- seleccionamos las tabas, campos
+	recuento de formula
+	no filtro, no gráficos
